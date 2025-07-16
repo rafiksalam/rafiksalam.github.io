@@ -1,0 +1,27 @@
+{
+  "name": "DrivingMan - Manual Driving Lessons Mississauga",
+  "short_name": "DrivingMan",
+  "description": "Professional manual driving lessons in Mississauga. Learn to drive stick shift on a 2015 Mustang GT with expert instruction.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f5f5f5",
+  "theme_color": "#e53935",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "driving_man.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "driving_man.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["education", "automotive"],
+  "lang": "en-CA",
+  "dir": "ltr"
+} 

@@ -1,3 +1,4 @@
+/* Optimized Google Fonts import with display=swap for better performance */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
 
 :root {
@@ -8,17 +9,31 @@
   --accent-color: #ff6b6b;
 }
 
+/* Performance optimizations */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+/* Optimize font rendering */
 body {
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
   line-height: 1.6;
   color: var(--text-color);
   background-color: var(--background-color);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Improve focus accessibility for SEO */
+a:focus,
+button:focus,
+input:focus,
+textarea:focus {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
 }
 
 /* Header and Navigation */
@@ -28,6 +43,7 @@ header {
   position: fixed;
   width: 100%;
   z-index: 1000;
+  transition: transform 0.3s ease;
 }
 
 nav {
@@ -35,6 +51,8 @@ nav {
   justify-content: space-between;
   align-items: center;
   padding: 1rem 5%;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .logo {
@@ -45,6 +63,7 @@ nav {
 .logo img {
   height: 40px;
   margin-right: 10px;
+  width: auto;
 }
 
 .logo span {
@@ -56,10 +75,7 @@ nav {
 nav ul {
   display: flex;
   list-style: none;
-}
-
-nav ul li {
-  margin-left: 2rem;
+  gap: 2rem;
 }
 
 nav ul li a {
@@ -67,10 +83,26 @@ nav ul li a {
   color: var(--secondary-color);
   font-weight: 600;
   transition: color 0.3s ease;
+  position: relative;
 }
 
 nav ul li a:hover {
   color: var(--primary-color);
+}
+
+nav ul li a::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: -5px;
+  left: 0;
+  background-color: var(--primary-color);
+  transition: width 0.3s ease;
+}
+
+nav ul li a:hover::after {
+  width: 100%;
 }
 
 /* Hero Section */
@@ -78,9 +110,11 @@ nav ul li a:hover {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 100vh;
+  min-height: 100vh;
   padding: 0 10%;
   background-color: var(--background-color);
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .hero-content {
@@ -89,14 +123,16 @@ nav ul li a:hover {
 }
 
 .hero h1 {
-  font-size: 3.5rem;
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
   margin-bottom: 1rem;
   color: var(--primary-color);
+  line-height: 1.2;
 }
 
 .hero p {
-  font-size: 1.2rem;
+  font-size: clamp(1rem, 2vw, 1.2rem);
   margin-bottom: 2rem;
+  color: var(--secondary-color);
 }
 
 .hero-image {
@@ -113,6 +149,7 @@ nav ul li a:hover {
   height: auto;
   position: absolute;
   transition: transform 0.5s ease-out;
+  will-change: transform;
 }
 
 .car-scroll-animation {
@@ -126,9 +163,10 @@ nav ul li a:hover {
   right: 70%;
   rotate: 10deg;
   transform: translateX(100%);
-  width: 80%; /* Adjust as needed */
+  width: 80%;
   opacity: 0;
   transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+  will-change: opacity, transform;
 }
 
 .cta-button {
@@ -139,34 +177,49 @@ nav ul li a:hover {
   border-radius: 30px;
   text-decoration: none;
   font-weight: 600;
-  transition: background-color 0.3s ease;
+  transition: all 0.3s ease;
+  border: 2px solid var(--primary-color);
 }
 
 .cta-button:hover {
   background-color: var(--accent-color);
+  border-color: var(--accent-color);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(229, 57, 53, 0.3);
 }
 
 /* About Section */
 .about {
   padding: 5rem 10%;
   text-align: center;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .about h2 {
-  font-size: 2.5rem;
+  font-size: clamp(2rem, 4vw, 2.5rem);
   margin-bottom: 3rem;
-  color: var(--secondary-color);
+  color: var(--primary-color);
 }
 
 .features {
   display: flex;
   justify-content: space-around;
   flex-wrap: wrap;
+  gap: 2rem;
 }
 
 .feature {
   flex-basis: calc(33.333% - 2rem);
   margin-bottom: 2rem;
+  padding: 1.5rem;
+  border-radius: 10px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.feature:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(229, 57, 53, 0.15);
 }
 
 .feature i {
@@ -178,6 +231,12 @@ nav ul li a:hover {
 .feature h3 {
   font-size: 1.5rem;
   margin-bottom: 1rem;
+  color: var(--primary-color);
+}
+
+.feature p {
+  color: var(--text-color);
+  line-height: 1.6;
 }
 
 /* Compare Features Section */
@@ -185,12 +244,14 @@ nav ul li a:hover {
   padding: 5rem 10%;
   background-color: white;
   text-align: center;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .compare-features h2 {
-  font-size: 2.5rem;
+  font-size: clamp(2rem, 4vw, 2.5rem);
   margin-bottom: 3rem;
-  color: var(--secondary-color);
+  color: var(--primary-color);
 }
 
 .feature-grid {
@@ -209,7 +270,7 @@ nav ul li a:hover {
 
 .feature-item:hover {
   transform: translateY(-10px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 10px 20px rgba(229, 57, 53, 0.15);
 }
 
 .feature-item i {
@@ -221,7 +282,7 @@ nav ul li a:hover {
 .feature-item h3 {
   font-size: 1.5rem;
   margin-bottom: 1rem;
-  color: var(--secondary-color);
+  color: var(--primary-color);
 }
 
 /* Pricing Section */
@@ -229,18 +290,21 @@ nav ul li a:hover {
   background-color: var(--background-color);
   padding: 5rem 10%;
   text-align: center;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .pricing h2 {
-  font-size: 2.5rem;
+  font-size: clamp(2rem, 4vw, 2.5rem);
   margin-bottom: 3rem;
-  color: var(--secondary-color);
+  color: var(--primary-color);
 }
 
 .pricing-cards {
   display: flex;
   justify-content: center;
   gap: 2rem;
+  flex-wrap: wrap;
 }
 
 .pricing-card {
@@ -250,6 +314,7 @@ nav ul li a:hover {
   flex-basis: calc(50% - 1rem);
   max-width: 350px;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
 }
 
 .pricing-card:hover {
@@ -266,6 +331,7 @@ nav ul li a:hover {
 .pricing-card h3 {
   font-size: 1.8rem;
   margin-bottom: 1rem;
+  color: var(--primary-color);
 }
 
 .price {
@@ -283,6 +349,16 @@ nav ul li a:hover {
 .pricing-card ul li {
   margin-bottom: 0.5rem;
   text-align: left;
+  position: relative;
+  padding-left: 1.5rem;
+}
+
+.pricing-card ul li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: var(--primary-color);
+  font-weight: bold;
 }
 
 .book-button {
@@ -293,11 +369,15 @@ nav ul li a:hover {
   border-radius: 30px;
   text-decoration: none;
   font-weight: 600;
-  transition: background-color 0.3s ease;
+  transition: all 0.3s ease;
+  border: 2px solid var(--primary-color);
 }
 
 .book-button:hover {
   background-color: var(--accent-color);
+  border-color: var(--accent-color);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(229, 57, 53, 0.3);
 }
 
 .pricing-card.featured::after {
@@ -313,287 +393,585 @@ nav ul li a:hover {
   font-weight: bold;
 }
   
-  /* FAQ Section */
-  .faq-section {
-    padding: 5rem 10%;
-    background-color: white;
+/* FAQ Section */
+.faq-section {
+  padding: 5rem 10%;
+  background-color: white;
+  text-align: center;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.faq-section h2 {
+  font-size: clamp(2rem, 4vw, 2.5rem);
+  margin-bottom: 3rem;
+  color: var(--primary-color);
+}
+
+.faq {
+  background-color: var(--background-color);
+  border-radius: 10px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  text-align: left;
+  transition: box-shadow 0.3s ease;
+}
+
+.faq:hover {
+  box-shadow: 0 5px 15px rgba(229, 57, 53, 0.15);
+}
+
+.faq-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--primary-color);
+  margin-bottom: 1rem;
+}
+
+.faq-content {
+  color: var(--text-color);
+  line-height: 1.6;
+  margin-top: 0.5rem;
+}
+
+/* Location Section */
+.location-section {
+  padding: 5rem 10%;
+  background-color: var(--background-color);
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.location-section .text {
+  flex: 1;
+}
+
+.location-section h2 {
+  font-size: clamp(2rem, 4vw, 2.5rem);
+  margin-bottom: 1.5rem;
+  color: var(--primary-color);
+}
+
+.location-section p {
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+  color: var(--text-color);
+  line-height: 1.6;
+}
+
+.location-section .map {
+  flex: 1;
+}
+
+.location-section iframe {
+  width: 100%;
+  height: 450px;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Contact Section */
+.contact {
+  padding: 5rem 10%;
+  background-color: white;
+  text-align: center;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.contact h2 {
+  font-size: clamp(2rem, 4vw, 2.5rem);
+  margin-bottom: 3rem;
+  color: var(--primary-color);
+}
+
+form {
+  max-width: 600px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+form label {
+  display: block;
+  text-align: left;
+  font-weight: 600;
+  color: var(--primary-color);
+  margin-bottom: 0.5rem;
+}
+
+form input,
+form textarea {
+  width: 100%;
+  padding: 1rem;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+  font-family: inherit;
+}
+
+form input:focus,
+form textarea:focus {
+  border-color: var(--primary-color);
+  outline: none;
+}
+
+form textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.submit-button {
+  background-color: var(--primary-color);
+  color: white;
+  padding: 1rem 2rem;
+  border: 2px solid var(--primary-color);
+  border-radius: 30px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: inherit;
+}
+
+.submit-button:hover {
+  background-color: var(--accent-color);
+  border-color: var(--accent-color);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(229, 57, 53, 0.3);
+}
+
+/* Footer */
+footer {
+  background-color: var(--secondary-color);
+  color: white;
+  padding: 3rem 10% 1rem;
+}
+
+.footer-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.footer-section h3 {
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+  color: var(--primary-color);
+}
+
+.footer-section ul {
+  list-style: none;
+}
+
+.footer-section ul li {
+  margin-bottom: 0.5rem;
+}
+
+.footer-section ul li a {
+  color: white;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer-section ul li a:hover {
+  color: var(--primary-color);
+}
+
+.footer-bottom {
+  text-align: center;
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid #555;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Reviews Page */
+.reviews-container {
+  padding: 5rem 10%;
+  background-color: var(--background-color);
+}
+
+.reviews-container h1 {
+  font-size: 2.5rem;
+  color: var(--secondary-color);
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.google-form-container {
+  max-width: 800px;
+  margin: 0 auto;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.google-form-container iframe {
+  width: 100%;
+  height: 800px;
+  border: none;
+}
+
+/* Header hide animation */
+.hide-header {
+  transform: translateY(-100%);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  header {
+    padding: 0 1rem;
+  }
+  
+  nav {
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1rem 5%;
+  }
+  
+  .logo {
+    align-self: center;
+    margin-bottom: 0.5rem;
+  }
+  
+  nav ul {
+    flex-direction: row;
+    gap: 1.5rem;
+    width: 100%;
+    justify-content: center;
+    margin: 0;
+  }
+  
+  nav ul li {
     text-align: center;
+    width: auto;
+  }
+  
+  nav ul li a {
+    display: block;
+    padding: 0.5rem 0;
+    width: auto;
+    font-size: 0.9rem;
+    white-space: nowrap;
+  }
+  
+  .hero {
+    flex-direction: column;
+    text-align: center;
+    padding: 2rem 5%;
+    min-height: auto;
+    padding-top: 140px; /* Increased to account for taller header */
+  }
+  
+  .hero-content,
+  .hero-image {
+    flex: none;
+    width: 100%;
+  }
+  
+  .hero h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  .hero p {
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+  }
+  
+  .hero-image {
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .hero-image img {
+    position: relative;
+    max-width: 80%;
+    left: 0;
+    transform: none;
+  }
+  
+  .skid-mark {
+    position: relative;
+    top: 0;
+    right: 0;
+    rotate: 10deg;
+    transform: none;
+    width: 60%;
+    opacity: 1;
+    margin-top: 0.3rem;
+  }
+  
+  .about {
+    padding: 3rem 5%;
+  }
+  
+  .about h2 {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+  }
+  
+  .features {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  
+  .feature {
+    flex-basis: 100%;
+    margin-bottom: 1.5rem;
+    padding: 1.5rem;
+  }
+  
+  .compare-features {
+    padding: 3rem 5%;
+  }
+  
+  .compare-features h2 {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+  }
+  
+  .feature-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .feature-item {
+    padding: 1.5rem;
+  }
+  
+  .pricing {
+    padding: 3rem 5%;
+  }
+  
+  .pricing h2 {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+  }
+  
+  .pricing-cards {
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+  }
+  
+  .pricing-card {
+    flex-basis: 100%;
+    max-width: 100%;
+    padding: 1.5rem;
+  }
+  
+  .pricing-card h3 {
+    font-size: 1.5rem;
+  }
+  
+  .price {
+    font-size: 2rem;
+  }
+  
+  .faq-section {
+    padding: 3rem 5%;
   }
   
   .faq-section h2 {
-    font-size: 2.5rem;
-    margin-bottom: 3rem;
-    color: var(--secondary-color);
+    font-size: 2rem;
+    margin-bottom: 2rem;
   }
   
   .faq {
-    background-color: var(--background-color);
-    border-radius: 10px;
     padding: 1.5rem;
-    margin-bottom: 1.5rem;
-    text-align: left;
-    transition: box-shadow 0.3s ease;
-  }
-  
-  .faq:hover {
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1rem;
   }
   
   .faq-title {
-    font-size: 1.2rem;
-    font-weight: 600;
-    color: var(--primary-color);
-    cursor: pointer;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    font-size: 1.1rem;
+    margin-bottom: 0.8rem;
   }
   
   .faq-content {
-    font-size: 1rem;
-    color: var(--text-color);
-    margin-top: 1rem;
+    font-size: 0.95rem;
   }
   
-  .faq.active .faq-content {
-    display: block;
-  }
-  
-  /* Location Section */
   .location-section {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 5rem 10%;
-    background-color: var(--background-color);
+    flex-direction: column;
+    text-align: center;
+    padding: 3rem 5%;
+    gap: 2rem;
   }
   
-  .location-section .text {
-    flex-basis: 40%;
-    padding-right: 2rem;
+  .location-section .text,
+  .location-section .map {
+    flex: none;
+    width: 100%;
   }
   
   .location-section h2 {
-    font-size: 2.5rem;
-    color: var(--secondary-color);
-    margin-bottom: 1.5rem;
+    font-size: 2rem;
+    margin-bottom: 1rem;
   }
   
   .location-section p {
-    font-size: 1.2rem;
-    line-height: 1.6;
-    color: var(--text-color);
-  }
-  
-  .location-section .map {
-    flex-basis: 55%;
+    font-size: 1rem;
+    margin-bottom: 1rem;
   }
   
   .location-section iframe {
-    width: 100%;
-    height: 400px;
-    border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    height: 300px;
   }
   
-  /* Contact Section */
   .contact {
-    background-color: white;
-    padding: 5rem 10%;
-    text-align: center;
+    padding: 3rem 5%;
   }
   
   .contact h2 {
-    font-size: 2.5rem;
-    margin-bottom: 3rem;
-    color: var(--secondary-color);
+    font-size: 2rem;
+    margin-bottom: 2rem;
   }
   
   form {
-    max-width: 600px;
-    margin: 0 auto;
+    gap: 1rem;
   }
   
   form label {
-    display: block;
-    margin-bottom: 1rem;
-    font-size: 1.2rem;
-    color: var(--secondary-color);
-    text-align: left;
+    font-size: 0.95rem;
   }
   
   form input,
   form textarea {
-    width: 100%;
-    padding: 1rem;
-    margin-top: 0.5rem;
-    margin-bottom: 1rem;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    font-family: 'Poppins', sans-serif;
-  }
-  
-  form textarea {
-    height: 150px;
+    padding: 0.8rem;
+    font-size: 0.95rem;
   }
   
   .submit-button {
-    background-color: var(--primary-color);
-    color: white;
-    border: none;
-    padding: 1rem 2rem;
-    border-radius: 30px;
-    cursor: pointer;
-    font-weight: 600;
-    transition: background-color 0.3s ease;
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
   }
   
-  .submit-button:hover {
-    background-color: var(--accent-color);
-  }
-  
-  /* Footer */
   footer {
-    background-color: var(--secondary-color);
-    color: white;
-    padding: 3rem 10% 1rem;
+    padding: 2rem 5% 1rem;
   }
   
   .footer-content {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    margin-bottom: 2rem;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    text-align: center;
   }
   
   .footer-section {
-    flex-basis: calc(33.333% - 2rem);
-    margin-bottom: 2rem;
+    text-align: center;
   }
   
   .footer-section h3 {
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
-  }
-  
-  .footer-section ul {
-    list-style: none;
+    font-size: 1.2rem;
+    margin-bottom: 0.8rem;
   }
   
   .footer-section ul li {
-    margin-bottom: 0.5rem;
-  }
-  
-  .footer-section ul li a {
-    color: white;
-    text-decoration: none;
-    transition: color 0.3s ease;
-  }
-  
-  .footer-section ul li a:hover {
-    color: var(--accent-color);
+    margin-bottom: 0.3rem;
   }
   
   .footer-bottom {
-    text-align: center;
-    padding-top: 1rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
   }
   
-  /* Reviews Page */
-  .reviews-container {
-    padding: 5rem 10%;
-    background-color: var(--background-color);
+  .footer-bottom p {
+    font-size: 0.9rem;
   }
-  
-  .reviews-container h1 {
-    font-size: 2.5rem;
-    color: var(--secondary-color);
-    text-align: center;
-    margin-bottom: 3rem;
-  }
-  
-  .google-form-container {
-    max-width: 800px;
-    margin: 0 auto;
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-  }
-  
-  .google-form-container iframe {
-    width: 100%;
-    height: 800px;
-    border: none;
-  }
+}
 
-  /* Hide the header */
-.hide-header {
-    transform: translateY(-100%);
-    transition: transform 0.3s ease;
+/* Extra small devices */
+@media (max-width: 480px) {
+  .hero h1 {
+    font-size: 2rem;
   }
   
-  /* Add a transition for a smooth effect */
-  header {
-    transition: transform 0.3s ease;
+  .hero p {
+    font-size: 1rem;
   }
   
-  
-  /* Responsive Design */
-  @media (max-width: 768px) {
-    
-    nav {
-      flex-direction: column;
-    }
-  
-    nav ul {
-      margin-top: 1rem;
-    }
-  
-    nav ul li {
-      margin-left: 1rem;
-      margin-right: 1rem;
-    }
-  
-    .hero {
-      flex-direction: column;
-      height: auto;
-      padding-top: 100px;
-    }
-  
-    .hero-content,
-    .hero-image {
-      flex: 1;
-      max-width: 100%;
-      margin-bottom: 2rem;
-    }
-  
-    .feature {
-      flex-basis: 100%;
-    }
-  
-    .pricing-cards {
-      flex-direction: column;
-      align-items: center;
-    }
-  
-    .pricing-card {
-      flex-basis: 100%;
-      margin-bottom: 2rem;
-    }
-  
-    .location-section {
-      flex-direction: column;
-    }
-  
-    .location-section .text,
-    .location-section .map {
-      flex-basis: 100%;
-      margin-bottom: 2rem;
-    }
-  
-    .footer-section {
-      flex-basis: 100%;
-    }
+  .cta-button {
+    padding: 0.7rem 1.5rem;
+    font-size: 0.95rem;
   }
+  
+  .about h2,
+  .compare-features h2,
+  .pricing h2,
+  .faq-section h2,
+  .location-section h2,
+  .contact h2 {
+    font-size: 1.8rem;
+  }
+  
+  .feature h3,
+  .feature-item h3 {
+    font-size: 1.3rem;
+  }
+  
+  .pricing-card h3 {
+    font-size: 1.4rem;
+  }
+  
+  .price {
+    font-size: 1.8rem;
+  }
+  
+  .book-button {
+    padding: 0.7rem 1.5rem;
+    font-size: 0.95rem;
+  }
+  
+  .faq-title {
+    font-size: 1rem;
+  }
+  
+  .faq-content {
+    font-size: 0.9rem;
+  }
+  
+  .location-section iframe {
+    height: 250px;
+  }
+  
+  .logo span {
+    font-size: 1.3rem;
+  }
+  
+  .logo img {
+    height: 35px;
+  }
+}
+
+/* Print styles for better accessibility */
+@media print {
+  .cta-button,
+  .book-button,
+  .submit-button {
+    display: none;
+  }
+  
+  body {
+    font-size: 12pt;
+    line-height: 1.4;
+  }
+  
+  .hero {
+    min-height: auto;
+    padding: 2rem 0;
+  }
+}

@@ -1,0 +1,19 @@
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://drivingman.ca/sitemap.xml
+
+# Crawl-delay for respectful crawling
+Crawl-delay: 1
+
+# Allow all important pages
+Allow: /index.html
+Allow: /styles.css
+Allow: /driving_man.png
+Allow: /mustang.png
+
+# Disallow any potential admin or private areas
+Disallow: /admin/
+Disallow: /private/
+Disallow: /temp/ 
